@@ -1,30 +1,146 @@
 // Assignment Code
 var generateBtn = document.querySelector("#generate");
-var upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-var lower = "abcdefghijklmnopqrstuvwxyz";
-var number = "0123456789";
-var specChar = "!@#$%";
+
+/* TODO */
+// --VALIDATION--
+// need to validate that complete password has all necessary parameters
+// --GENERATION--
+// DONE
 
 // Write password to the #password input
 function writePassword() {
+    var upperArr = [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "G",
+        "H",
+        "I",
+        "J",
+        "K",
+        "L",
+        "M",
+        "N",
+        "O",
+        "P",
+        "Q",
+        "R",
+        "S",
+        "T",
+        "U",
+        "V",
+        "W",
+        "X",
+        "Y",
+        "Z",
+    ];
+    var lowerArr = [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g",
+        "h",
+        "i",
+        "j",
+        "k",
+        "l",
+        "m",
+        "n",
+        "o",
+        "p",
+        "q",
+        "r",
+        "s",
+        "t",
+        "u",
+        "v",
+        "w",
+        "x",
+        "y",
+        "z",
+    ];
+    var numArr = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+    var specCharArr = ["!", "@", "#", "$", "%"];
     var errorMsg = "Please enter a valid selection. ";
+    var password = "";
     var criteria = [];
+    var passLength = [];
     var valid = "";
 
-    /* TODO */
-    // --VALIDATION--
-    // DONE
-
-    // --GENERATION--
-    // actual password generation needs to be done
-
+    /* PROMPTS */
     Length();
     UpperCase();
     LowerCase();
     Numbers();
     Special();
+    console.log(passLength);
     console.log(criteria);
 
+    generatePassword(passLength, criteria);
+    var passwordText = document.querySelector("#password");
+    passwordText.value = password;
+
+    function generatePassword(passLength, criteria) {
+        for (var i = 0; i < passLength; i++) {
+            // console.log(i);
+            arr(criteria);
+            // validatePassword(password, criteria);
+        }
+    }
+
+    // GENERATOR FUNCTIONS
+    function arr(criteria) {
+        var type = Math.floor(Math.random() * criteria.length);
+        // console.log(type);
+        // console.log(criteria[type]);
+        switch (criteria[type]) {
+            case "upper":
+                upper(upperArr);
+                break;
+            case "lower":
+                lower(lowerArr);
+                break;
+            case "number":
+                number(numArr);
+                break;
+            case "specChar":
+                specChar(specCharArr);
+                break;
+        }
+    }
+
+    function upper() {
+        var char = Math.floor(Math.random() * upperArr.length);
+        console.log(upperArr[char]);
+        password = password.concat(upperArr[char]);
+    }
+
+    function lower() {
+        var char = Math.floor(Math.random() * lowerArr.length);
+        console.log(lowerArr[char]);
+        password = password.concat(lowerArr[char]);
+    }
+
+    function number(numArr) {
+        numArr = numArr;
+        var char = Math.floor(Math.random() * numArr.length);
+        console.log(numArr[char]);
+        password = password.concat(numArr[char]);
+    }
+
+    function specChar() {
+        var char = Math.floor(Math.random() * specCharArr.length);
+        console.log(specCharArr[char]);
+        password = password.concat(specCharArr[char]);
+    }
+
+    // PROMPT FUNCTIONS
     /* ask how many characters (8-128) */
     function Length() {
         var input =
@@ -36,8 +152,8 @@ function writePassword() {
             validateNum(passLen);
         }
         if (valid === "yes") {
-            passLen = Number(passLen);
-            criteria.push(passLen);
+            passLength.push(passLen);
+            // console.log(passLength);
         }
     }
 
@@ -52,7 +168,7 @@ function writePassword() {
             validateYN(passUC);
         }
         if (valid === "yes") {
-            addYN(passUC);
+            criteria.push("upper");
         }
     }
 
@@ -67,7 +183,7 @@ function writePassword() {
             validateYN(passLC);
         }
         if (valid === "yes") {
-            addYN(passLC);
+            criteria.push("lower");
         }
     }
 
@@ -82,7 +198,7 @@ function writePassword() {
             validateYN(passNum);
         }
         if (valid === "yes") {
-            addYN(passNum);
+            criteria.push("number");
         }
     }
 
@@ -96,15 +212,18 @@ function writePassword() {
             passSpec = prompt(errorMsg + input);
             validateYN(passSpec);
         }
-        if ((valid = "yes")) {
-            addYN(passSpec);
+        if (valid === "yes") {
+            criteria.push("specChar");
         }
     }
 
+    // VALIDATION FUNCTIONS
     /* validates the value is "y" or "n", else returns error */
     function validateYN(x) {
-        if (x === "y" || x === "n") {
+        if (x === "y") {
             valid = "yes";
+        } else if (x === "n") {
+            valid = "no";
         } else {
             valid = "error";
         }
@@ -113,7 +232,7 @@ function writePassword() {
 
     /* validates the value is a number, else returns error */
     function validateNum(x) {
-        var x = Number(x);
+        var x = parseInt(x);
         if (isNaN(x)) {
             valid = "error";
         } else if (x % 1 !== 0) {
@@ -125,34 +244,8 @@ function writePassword() {
         }
         return valid;
     }
-
-    /* adds value to 'criteria' array */
-    function addYN(x) {
-        if (x === "y") {
-            x = true;
-        } else {
-            x = false;
-        }
-        criteria.push(x);
-    }
-    /*
-    var password = generatePassword(criteria);
-
-    var passwordText = document.querySelector("#password");
-    passwordText.value = password;
-*/
+    function validatePassword(password, criteria) {}
 }
 
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
-
-function generatePassword() {
-    var i = criteria[0];
-    /* iterate i times through the following
-      random of criteria 1 - length-1
-      console.log(getRandomInt(3));
-      random character from appropriate string var
-      add to password
-      return password 
-  */
-}
