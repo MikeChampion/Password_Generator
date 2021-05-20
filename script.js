@@ -75,6 +75,11 @@ function writePassword() {
     LowerCase();
     Numbers();
     Special();
+    if (criteria.length === 0) {
+        var input =
+            "You cannot select 0 password criteria, please begin again.";
+        var passLen = alert(input);
+    }
     console.log(passLength);
     console.log(criteria);
 
