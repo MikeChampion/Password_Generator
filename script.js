@@ -1,14 +1,9 @@
 // Assignment Code
 var generateBtn = document.querySelector("#generate");
 
-/* TODO */
-// --VALIDATION--
-// need to validate that complete password has all necessary parameters
-// --GENERATION--
-// DONE
-
 // Write password to the #password input
 function writePassword() {
+    /* VARIABLES */
     var upperArr = [
         "A",
         "B",
@@ -72,6 +67,7 @@ function writePassword() {
     var criteria = [];
     var passLength = [];
     var valid = "";
+    var passValid = "";
 
     /* PROMPTS */
     Length();
@@ -82,23 +78,41 @@ function writePassword() {
     console.log(passLength);
     console.log(criteria);
 
-    generatePassword(passLength, criteria);
+    if (passValid === "") {
+        generatePassword(passLength, criteria);
+    }
+
     var passwordText = document.querySelector("#password");
     passwordText.value = password;
 
+    // GENERATOR FUNCTIONS
     function generatePassword(passLength, criteria) {
-        for (var i = 0; i < passLength; i++) {
-            // console.log(i);
-            arr(criteria);
-            // validatePassword(password, criteria);
+        var count = 0;
+        for (i = count; i < criteria.length; i++) {
+            switch (criteria[i]) {
+                case "upper":
+                    upper(upperArr);
+                    break;
+                case "lower":
+                    lower(lowerArr);
+                    break;
+                case "number":
+                    number(numArr);
+                    break;
+                case "specChar":
+                    specChar(specCharArr);
+                    break;
+            }
         }
+        count = criteria.length;
+        for (i = count; i < passLength; i++) {
+            arr(criteria);
+        }
+        console.log(password);
     }
 
-    // GENERATOR FUNCTIONS
     function arr(criteria) {
         var type = Math.floor(Math.random() * criteria.length);
-        // console.log(type);
-        // console.log(criteria[type]);
         switch (criteria[type]) {
             case "upper":
                 upper(upperArr);
@@ -117,26 +131,22 @@ function writePassword() {
 
     function upper() {
         var char = Math.floor(Math.random() * upperArr.length);
-        console.log(upperArr[char]);
         password = password.concat(upperArr[char]);
     }
 
     function lower() {
         var char = Math.floor(Math.random() * lowerArr.length);
-        console.log(lowerArr[char]);
         password = password.concat(lowerArr[char]);
     }
 
     function number(numArr) {
         numArr = numArr;
         var char = Math.floor(Math.random() * numArr.length);
-        console.log(numArr[char]);
         password = password.concat(numArr[char]);
     }
 
     function specChar() {
         var char = Math.floor(Math.random() * specCharArr.length);
-        console.log(specCharArr[char]);
         password = password.concat(specCharArr[char]);
     }
 
@@ -244,7 +254,6 @@ function writePassword() {
         }
         return valid;
     }
-    function validatePassword(password, criteria) {}
 }
 
 // Add event listener to generate button
