@@ -14,7 +14,7 @@ Creating a repository on Github, and deploy the page to a live URL.
 
 ## II. Project screenshot
 
-![portfolio demo](https://github.com/MikeChampion/Password_Generator)
+![password generator demo](./project-screenshot.png)
 
 ## III. Link to deployed page
 
