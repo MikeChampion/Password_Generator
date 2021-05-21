@@ -80,8 +80,6 @@ function writePassword() {
             "You cannot select 0 password criteria, please begin again.";
         var passLen = alert(input);
     }
-    console.log(passLength);
-    console.log(criteria);
 
     if (passValid === "") {
         generatePassword(passLength, criteria);
@@ -113,7 +111,6 @@ function writePassword() {
         for (i = count; i < passLength; i++) {
             arr(criteria);
         }
-        console.log(password);
     }
 
     function arr(criteria) {
